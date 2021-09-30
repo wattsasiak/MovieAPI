@@ -13,11 +13,13 @@ namespace MovieDataAPI.Models
         public static MySqlConnection DB;
 
 
-        //get list of all movies
+        //get list of all genres
         public static List<Genre> GetAllGenres()
         {
             return DB.GetAll<Genre>().ToList();
         }
+
+
 
         public static Genre GetGenre(string id)
         {
@@ -25,15 +27,40 @@ namespace MovieDataAPI.Models
         }
 
 
-        public static GenreMovies GetAllForGenre(string thegenreId)
+        //get all movies by specific genre
+
+        public static List<Movie> GetAllForGenre(string thegenreId)
         {
-            var keyvalues = new { _genreId = thegenreId };
-            string sql = "select * from movie where genreId = @_genreId";  // Code in another language, stored in a string!
-            GenreMovies GM = new GenreMovies();
-            GM.my_movies = DB.Query<Movie>(sql, keyvalues).ToList();
-            GM.my_genre = DAL.GetGenre(thegenreId);
-            return GM;
+            var keyvalues = new {genreId = thegenreId };
+            string sql = "select * from movie where genreId = @genreId"; 
+            return DB.Query<Movie>(sql, keyvalues).ToList();
+
+
         }
+
+
+        //get all movies
+        public static List<Movie> GetAllMovies()
+        {
+            return DB.GetAll<Movie>().ToList();
+        }
+
+     
+        //update
+        public static void UpdateGenre(Genre my_genre)
+        {
+            Genre updategenre = DAL.GetGenre(my_genre.id);
+            DB.Update(my_genre);
+        }
+
+        //delete
+        public static void DeleteGenre(string thegenreId)
+        {
+            Genre my_genre = new Genre() { id = thegenreId };
+            DB.Delete(my_genre);
+        }
+
+
 
     }
 }
