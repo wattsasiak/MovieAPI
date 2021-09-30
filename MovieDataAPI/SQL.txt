@@ -1,0 +1,27 @@
+﻿create database moviesrepo;
+use moviesrepo;
+create table genre(
+	id varchar(4) not null,
+    	name varchar(20) not null,
+    	description varchar(200) not null,
+    	primary key(id)
+);
+create table movie(
+	id int not null auto_increment,
+	name varchar(20) not null,
+	year varchar(20) not null,
+	mainactor varchar(200) not null,
+	genreId varchar(4) not null,
+	primary key(id),
+	foreign key (genreId) references Genre(id)
+);
+insert into genre(id, name, description) values ('COM','Comedy','Defined by events that are primarily intended to make the audience laugh');
+insert into genre(id, name, description) values ('DRMA','Drama','Focused on emotions and defined by conflict, often looking to reality rather than sensationalism.');
+insert into genre(id, name, description) values ('ACTI','Action','Associated with particular types of spectacle (e.g., explosions, chases, combat)');
+insert into genre(id, name, description) values ('HORR','Horror',' A film that seeks to elicit fear or disgust in its audience for entertainment purposes.');
+
+insert into movie (name, year, mainactor, genreId) values ('Rush Hour', '1998', 'Jackie Chan', 'COM');
+insert into movie (name, year, mainactor, genreId) values ('Superbad','2007', 'Jonah Hill','COM');
+insert into movie (name, year, mainactor, genreId) values ('Mission: Impossible','1996', 'Tom Cruise','ACTI');
+insert into movie (name, year, mainactor, genreId) values ('Mortal Kombat','2021', 'Lewis Tan','ACTI');
+insert into movie (name, year, mainactor, genreId) values ('You Got Served','2004', 'Marques Houston','DRMA');
